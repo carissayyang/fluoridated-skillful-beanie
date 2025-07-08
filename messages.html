@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background: #d0d0d0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #f4f4f4;
+            padding: 10px;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-bar {
+            padding: 6px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            justify-content: space-between;
+        }
+
+        .contact:hover {
+            background: #e0e0e0;
+        }
+
+        .contact img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .last-message-time {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* Chat Window */
+        .chat-window {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        /* Header */
+        .messages-bar {
+            background: #d3d3d3;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .contact-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Messages */
+        .messages {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date-time {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .message {
+            max-width: 65%;
+            padding: 10px;
+            margin: 2px 0;
+            border-radius: 12px;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background: #007bff;
+            color: white;
+        }
+
+        .received {
+            align-self: flex-start;
+            background: #e0e0e0;
+        }
+
+        .message + .message.same-sender {
+            margin-top: 1px;
+        }
+
+        /* Input Box */
+        .message-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+            padding: 8px;
+            background: #f4f4f4;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .message-input button {
+            margin-left: 8px;
+            padding: 8px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message-input button:hover {
+            background: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="search-bar">🔍 Search</div>
+
+        <div class="contact" onclick="loadMessages('Dad')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Dad">
+                Dad
+            </div>
+            <div class="last-message-time">10:34 AM</div>
+        </div>
+
+        <div class="contact" onclick="loadMessages('Mom')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Mom">
+                Mom
+            </div>
+            <div class="last-message-time">9:57 AM</div>
+        </div>
+
+        <div class="contact" onclick="loadMessages('Maddy (old person)')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Maddy (old person)">
+                Maddy (old person)
+            </div>
+            <div class="last-message-time">Wednesday</div>
+        </div>
+
+        <div class="contact" onclick="loadMessages('Maddie (sister)')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Maddie (sister)">
+                Maddie (sister)
+            </div>
+            <div class="last-message-time">Tuesday</div>
+        </div>
+
+        <div class="contact" onclick="loadMessages('Parker (intro to computer programing)')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Parker (intro to computer programing)">
+                Parker (intro to computer programing)
+            </div>
+            <div class="last-message-time">Sunday</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Jaime')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Jaime">
+                Jaime
+            </div>
+            <div class="last-message-time">Friday</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Henry')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Henry">
+                Henry
+            </div>
+            <div class="last-message-time">Oct 9</div>
+        </div>  
+        <div class="contact" onclick="loadMessages('Caden')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Caden">
+                Caden
+            </div>
+            <div class="last-message-time">Oct 4</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Nick')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Nick">
+                Nick
+            </div>
+            <div class="last-message-time">Oct 1</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Kai')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Kai">
+                Kai
+            </div>
+            <div class="last-message-time">Sep 29</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Riti')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Riti">
+                Riti
+            </div>
+            <div class="last-message-time">Sep 20</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Conner')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Conner">
+                Conner
+            </div>
+            <div class="last-message-time">Sep 13</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Jason')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Jason">
+                Jason
+            </div>
+            <div class="last-message-time">Sep 1</div>
+        </div>
+        <div class="contact" onclick="loadMessages('Alexis')">
+            <div class="contact-info">
+                <img src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/avatar-gender-neutral-silhouette-vector-600nw-2470054311.webp?v=1740079126863" alt="Alexis">
+                Alexis
+            </div>
+            <div class="last-message-time">Aug 29</div>
+        </div>
+    </div>
+    
+  
+    <!-- Chat Window -->
+    <div class="chat-window">
+        <div class="messages-bar">
+            <span class="contact-name" id="contactName">Dad</span>
+        </div>
+
+        <div class="messages" id="chatMessages"></div>
+
+        <!-- Input Field -->
+        <div class="message-input">
+            <input type="text" placeholder="Type a message..." disabled>
+            <button disabled>Send</button>
+        </div>
+    </div>
+
+    <script>
+        const conversations = {
+            "Dad": {
+                time: "10:21 AM",
+                messages: [
+                    { text: "You do not talk to your mother that way.", sender: "Dad" },
+                    { text: "You're mother called me in the middle of the work day crying.", sender: "Dad" },
+                    { text: "You made her cry.", sender: "Dad" },
+                    { text: "She has been crying for the past 20 minutes.", sender: "Dad" },
+                    { text: "She says you have made her feel like a failure.", sender: "Dad" },
+                    { text: "Like she failed at her one job", sender: "Dad" },
+                    { text: "Where did we go wrong with you?", sender: "Dad" },
+                    { text: "Goodness knows your sister isn't like this!", sender: "Dad" },
+                    { text: "I told her we needed to stop mollycoddling you if we wanted you to succeed on your own.", sender: "Dad" },
+                    { text: "This is the thanks we get for caring for you and loving you?", sender: "Dad" },
+                    { text: "For feeding you, clothing you, keeping a roof over your head?", sender: "Dad" },
+                    { text: "After all we've done for you, after all we've sacrificed to give you a good life, you can't even do this one thing right.", sender: "Dad" },
+                    { text: "You can't even do this one thing for us.", sender: "Dad" },
+                    { text: "For your own mother.", sender: "Dad" },
+                    { text: "You won't go wasting the $90,000 a year we are spending giving you a great education.", sender: "Dad" },
+                    { text: "You will get right to studying and do well on your exams.", sender: "Dad" },
+                    { text: "You will officially declare a major and it won't be any sort of art or design bullshit or so help me God.", sender: "Dad" }, 
+                ]
+            },
+            "Mom": {
+                time: "9:38 AM",
+                messages: [
+                    { text: "Midterms are coming up.  Are you ready?", sender: "Mom" },
+                    { text: "yeah", sender: "You" },
+                    { text: "i think so", sender: "You" },
+                    { text: "Honey, we talked about this...", sender: "Mom" },
+                    { text: "I'm sorry.", sender: "You" },
+                    { text: "It's alright, you're still learning.  Just remember that it's important, being professional in communications is a big part of being taken seriously.", sender: "Mom" },
+                    { text: "I know, I'll make sure to try my best to do so in the future.", sender: "You" },
+                    { text: "You will.  What is that quote from that movie you like?  There is no try, only doing?", sender: "Mom" },
+                    { text: "Only a Sith deals in absolutes.", sender: "You" },
+                    { text: "What?", sender: "Mom" },
+                    { text: "It's just a reference to a movie, nevermind", sender: "You" },
+                    { text: "You see, it's these kinds of things that make it clear why you did so poorly on your finals last semester.  All that time wasted watching movies over and over, learning every line.", sender: "Mom" },
+                    { text: "I already knew the line. Me knowing a line from a movie isn't from memorizing movies.", sender: "You" },
+                    { text: "Still, you could have spent more time studying instead of wasting your time with that silly art stuff you're always doing.  Art is a hobby, not a job; and it will not get you into a good graduate school, a good GPA will.", sender: "Mom" },
+                    { text: "I tried my best, Mom.", sender: "You" },
+                    { text: "Now, I know that is not true because your best is better than that.  Hopefully you have learned your lesson this time around and are adequately making use of your free time.", sender: "Mom" },
+                    { text: "I am.", sender: "You" },
+                    { text: "You are doing your homework and studying hard, correct?", sender: "Mom" },
+                    { text: "I am.", sender: "You" },
+                    { text: "You aren't dilly-dallying and drawing or painting or whatever it is you do, correct?", sender: "Mom" },
+                    { text: "It really hurts my feelings when you talk about my art that way.", sender: "You" },
+                    { text: "Darling, art is hurting your grades.", sender: "Mom" },
+                    { text: "My grades are fine though!", sender: "You" },
+                    { text: "And in turn is hurting your chance at a good, well paying job and a good future.", sender: "Mom" },
+                    { text: "I don't want to go to grad school!", sender: "You" },
+                    { text: "I want to study art!", sender: "You" },
+                    { text: "not business or whatever it is you want me to do", sender: "You" },
+                    { text: "im not you", sender: "You" },
+                    { text: "im my own person", sender: "You" },
+                    { text: "you cant keep controling every bit of my life like this", sender: "You" },
+                    { text: "it hurts", sender: "You" },
+                    { text: "and it stresses me out", sender: "You" },
+                    { text: "thats why my grades are shit", sender: "You" },
+                    { text: "all this pressure you and dad keep putting on me makes me feel like shit", sender: "You" },
+                    { text: "and it gets even worse when i cant live up to your impossibly high expectations", sender: "You" },
+                    { text: "i actually enjoy making art", sender: "You" },
+                    { text: "and im good at it", sender: "You" },
+                    { text: "thats what i want to do with my life", sender: "You" },
+                    { text: "i might not end up as successful as you want me to be", sender: "You" },
+                    { text: "but at least ill be happy", sender: "You" },
+                    { text: "doing art makes me happy", sender: "You" },
+                ]
+            },
+            "Maddy (old person)": {
+                time: "Wednesday, Oct 16 • 3:49 PM",
+                messages: [
+                    { text: "are we still down for dinner at mine tonight?", sender: "You" },
+                    { text: "or are you too busy studying", sender: "You" },
+                    { text: "dude", sender: "Maddy (old person)" },
+                    { text: "im SWAMPED w hw", sender: "Maddy (old person)" },
+                    { text: "i dont even have TIME to study", sender: "Maddy (old person)" },
+                    { text: "let alone hang out", sender: "Maddy (old person)" },
+                    { text: "like what", sender: "Maddy (old person)" },
+                    { text: "L", sender: "You" },
+                    { text: "imagine having to study lol", sender: "You" },
+                    { text: "imagine doing well on exams lol", sender: "Maddy (old person)" },
+                    { text: "imagine being a stem major lol", sender: "You" },
+                    { text: "imagine being undecided bc your too much of a coward to tell your parents you wanna major in art", sender: "Maddy (old person)" },
+                    { text: "imagine being a bitch", sender: "You" },
+                    { text: "*surprised pikachu face*", sender: "Maddy (old person)" },
+                    { text: "ok i deserved that", sender: "Maddy (old person)" },
+                ]
+            },
+            "Maddie (sister)": {
+                time: "Tuesday, Oct 15 • 11:34 AM",
+                messages: [
+                    { text: "QUICK", sender: "Maddie (sister)" },
+                    { text: "Whats do you do", sender: "Maddie (sister)" },
+                    { text: "Sock sock shoe shoe tie tie", sender: "Maddie (sister)" },
+                    { text: "Sock shoe sock show tie tie", sender: "Maddie (sister)" },
+                    { text: "Sock cock shoe tie shoe tie", sender: "Maddie (sister)" },
+                    { text: "Or are you a pyschopath and do sock shoe tie sock shoe tie???", sender: "Maddie (sister)" },
+                    { text: "none", sender: "You" },
+                    { text: "i do sock sock shoe tie shoe tie", sender: "You" },
+                    { text: "i prefer my cock to not be involved in my shoe tying experiences", sender: "You" },
+                    { text: "Weirdo", sender: "Maddie (sister)" },
+                    { text: "what was this for", sender: "You" },
+                    { text: "why did you need to know", sender: "You" },
+                  
+                    { text: "maddie?", sender: "You" },
+                  
+                    { text: "hello??", sender: "You" },
+                  
+                    { text: "you alwasy do this", sender: "You" },
+                  
+                    { text: "rot in hell", sender: "You" },
+                    { text: "Fuck you", sender: "Maddie (sister)" },
+                    { text: "I LOVE YOUUUIU", sender: "You" },
+                    { text: "SOOOOOOOOOOO MUCH", sender: "You" },
+                    { text: "😚😚😚", sender: "You" },
+                    { text: "💋", sender: "You" },
+                    { text: "❤️❤️❤️❤️❤️", sender: "You" },
+                    { text: "💖💖💖", sender: "You" },
+                    { text: "❤️", sender: "You" },
+                    { text: "🧡", sender: "You" },
+                    { text: "💛", sender: "You" },
+                    { text: "💚", sender: "You" },
+                    { text: "🩵", sender: "You" },
+                    { text: "💙", sender: "You" },
+                    { text: "💜", sender: "You" },
+                    { text: "🤎", sender: "You" },
+                    { text: "🖤", sender: "You" },
+                    { text: "🩶", sender: "You" },
+                    { text: "🤍", sender: "You" },
+                    { text: "🩷", sender: "You" },
+                    { text: "💘", sender: "You" },
+                    { text: "💝", sender: "You" },
+                    { text: "💖", sender: "You" },
+                    { text: "💗", sender: "You" },
+                    { text: "💓", sender: "You" },
+                    { text: "💞", sender: "You" },
+                    { text: "💕", sender: "You" },
+                    { text: "Quit spamming me dickhead", sender: "Maddie (sister)" },
+                    { text: "💔💔💔💔💔", sender: "You" },
+                ]
+            },
+            "Parker (intro to computer programing)": {
+                time: "Thursday, Sep 26 • 7:23 PM",
+                messages: [
+                    { text: "What did you get on number 4 for the homework?", sender: "Parker (intro to computer programing)" },
+                    { text: "i haven't gotten that far yet", sender: "You" },
+                    { text: "Ok", sender: "Parker (intro to computer programing)" },
+                
+                    { text: "im not gonna be in class tomorrow", sender: "You" },
+                    { text: "could you give me the notes from the lesson", sender: "You" },
+                    { text: "Sure", sender: "Parker (intro to computer programing)" },
+                    { text: "Why aren't you going to be there?", sender: "Parker (intro to computer programing)" },
+                    { text: "i have to pick up a shift at work", sender: "You" },
+                    { text: "Ok", sender: "Parker (intro to computer programing)" },
+                    { text: "Don't forget to email", sender: "Parker (intro to computer programing)" },
+                    { text: "i won't", sender: "You" },
+                    { text: "thanks", sender: "You" },
+                  
+                    { text: "ICP_Class11_Notes.pdf", sender: "Parker (intro to computer programing)" },
+                    { text: "thank you so much", sender: "You" },
+                    { text: "i owe you big time", sender: "You" },
+                    { text: "No problem", sender: "Parker (intro to computer programing)" },
+                  
+                    { text: "Do you have the answers to the practice problems?", sender: "Parker (intro to computer programing)" },
+                    { text: "yeah", sender: "You" },
+                    { text: "give me a sec", sender: "You" },
+                    { text: "i'll email them to you", sender: "You" },
+                    { text: "Okay", sender: "Parker (intro to computer programing)" },
+                  
+                    { text: "Okay, got it", sender: "Parker (intro to computer programing)" },
+                    { text: "Thanks", sender: "Parker (intro to computer programing)" },
+                    { text: "np", sender: "You" },
+                ]
+            },
+            "Jaime": {
+                time: "Friday, Oct 11 • 11:07 AM",
+                messages: [
+                    { text: "Hey, do you have a pot I can borrow in like an hour to make pasta by any chance?", sender: "Jaime" },
+                    { text: "yeah ofc", sender: "You" },
+                    { text: "i also have a colander if you need it to drain the water out", sender: "You" },
+                    { text: "I forgot about that thanks", sender: "Jaime" },
+                    { text: "np", sender: "You" },
+                    { text: "I got this pumpkin ravioli from Trader Joes", sender: "Jaime" },
+                    { text: "I havnt tried it", sender: "Jaime" },
+                    { text: "just let me know when you need it", sender: "You" },
+                    { text: "oh neat", sender: "You" },
+                    { text: "Ok thank you!", sender: "Jaime" },
+                    { text: "i hope you enjoy it", sender: "You" },
+                    { text: "Thanks", sender: "Jaime" },
+                ]
+            },
+            "Henry": {
+                time: "Wednesday, Oct 9 • 10:32 AM",
+                messages: [
+                    { text: "hey so i just woke up and my sinuses are completely FUCKED so I dont think I can hang today :(", sender: "Henry" },
+                    { text: "Im still decideing on whether Im going to class but I just wanted to lyk that Im not feeling good", sender: "Henry" },
+                    { text: "ok", sender: "You" },
+                    { text: "i get it", sender: "You" },
+                    { text: "if you want, i like just made chicken noodle soup yesterday and can bring it over?", sender: "You" },
+                    { text: "we dont have to hang", sender: "You" },
+                    { text: "when i dont feel well, i STRUGGLE to feed myself", sender: "You" },
+                    { text: "nah", sender: "Henry" },
+                    { text: "and dont worry", sender: "Henry" },
+                    { text: "my roommate is mother henning me and feeding me all the good things", sender: "Henry" },
+                    { text: "Good", sender: "You" },  
+                    { text: "I swear hed set up an IV if I didnt stop him", sender: "Henry" },
+                    { text: "lol", sender: "You" },
+                ]
+            },
+            "Caden": {
+                time: "Friday, Oct 4 • 4:26 PM",
+                messages: [
+                    { text: "Random question", sender: "Caden" },
+                    { text: "whats up?", sender: "You" },
+                    { text: "If the invisible guy from hotel Transylvania wears classes and we can see them...", sender: "Caden" },
+                    { text: "Does that mean he never wears clothes?", sender: "Caden" },
+                    { text: "i thought it was canon that he doesnt wear clothes?", sender: "You" },
+                    { text: "isnt it covered in one of the movies?", sender: "You" },
+                    { text: "its been a while", sender: "You" },
+                    { text: "idk", sender: "You" },
+                    { text: "WHAT!!", sender: "Caden" },
+                    { text: "And they just put that in a kids movie?!", sender: "Caden" },
+                    { text: "i guess so", sender: "You" },
+                    { text: "Thats messed up", sender: "Caden" },
+                    { text: "yep", sender: "You" },                  
+                ]
+            },
+            "Nick": {
+                time: "Tuesday, Oct 1 • 4:26 PM",
+                messages: [
+                    { text: "DUDE", sender: "Nick" },
+                    { text: "I just got my passport sent in", sender: "Nick" },
+                    { text: "Im not gonna send a pic of it for safety sake", sender: "Nick" },
+                    { text: "But TRUST", sender: "Nick" },
+                    { text: "It looks better than yours", sender: "Nick" },
+                    { text: "damn..", sender: "You" },
+                    { text: "well its not like mine was a high bar", sender: "You" },
+                    { text: "True true", sender: "Nick" },
+                    { text: "Anyways,", sender: "Nick" },
+                    { text: "Love you <3", sender: "Nick" },
+                    { text: "who are you and what have you done w Nick?", sender: "You" },
+                    { text: "I am me", sender: "Nick" },
+                    { text: "Its just Im pretty sure I sprained my ankle a few days ago so I cant walk and I cant flatten my foot", sender: "Nick" },
+                    { text: "oh no", sender: "You" },
+                    { text: "Yeah", sender: "Nick" },
+                    { text: "you been keeping off of it?", sender: "You" },
+                    { text: "No the crutches are in a closet that is blocked buy furniture", sender: "Nick" },
+                    { text: "oof", sender: "You" },
+                    { text: "howve classes been so far", sender: "You" },
+                    { text: "Boring", sender: "Nick" },
+                    { text: "fair", sender: "You" },
+                ]
+            },
+            "Kai": {
+                time: "Sunday, Sep 29 • 5:13 PM",
+                messages: [
+                    { text: "DUDE", sender: "Kai" },
+                    { text: "been a while", sender: "Kai" },
+                    { text: "hows it feel to be back in ny", sender: "Kai" },
+                    { text: "its fine", sender: "You" },
+                    { text: "been alright", sender: "You" },
+                    { text: "roommates aren't horrible lol", sender: "You" },
+                    { text: "howre classes", sender: "Kai" },
+                    { text: "whatre you takeing", sender: "Kai" },
+                    { text: "just the basic gen eds", sender: "You" },
+                    { text: "any art?", sender: "Kai" },
+                    { text: "not this semester", sender: "You" },
+                    { text: "dude...", sender: "Kai" },
+                    { text: "i know", sender: "You" },
+                    { text: "you gotta get on that", sender: "Kai" },
+                    { text: "i know", sender: "You" },
+                    { text: "its just my parents", sender: "You" },
+                    { text: "hey", sender: "Kai" },
+                    { text: "i get it", sender: "Kai" },
+                    { text: "im sure itll all work out in the end", sender: "Kai" },
+                    { text: "yk", sender: "Kai" },
+                    { text: "yeah", sender: "You" },
+                    { text: "anyway", sender: "You" },
+                    { text: "i gotta go", sender: "You" },
+                    { text: "hw yk", sender: "You" },
+                    { text: "ok", sender: "Kai" },
+                    { text: "but dude", sender: "Kai" },
+                    { text: "reach out", sender: "Kai" },
+                    { text: "or respond", sender: "Kai" },
+                    { text: "please", sender: "Kai" },
+                    { text: "we all miss you here", sender: "Kai" },
+                    { text: "and were here for you", sender: "Kai" },
+                    { text: "ik", sender: "You" },
+                    { text: "bye", sender: "You" },
+                    { text: "see ya", sender: "Kai" },
+                ]
+            },
+            "Riti": {
+                time: "Friday, Sep 20 • 11:26 PM",
+                messages: [
+                    { text: "are you coming to class?", sender: "Riti" },
+                    { text: "hey r u good?", sender: "Riti" },
+                    { text: "oh sorry", sender: "You" },
+                    { text: "im eh", sender: "You" },
+                    { text: "i didnt finish my paper for class yet and i am still not feelin well", sender: "You" },
+                    { text: "thank you for checking in tho", sender: "You" },
+                    { text: "i really appreciate it", sender: "You" },
+                    { text: "okok, lmk if there's something i can do for u", sender: "Riti" },
+                    { text: "you can vent if you want?", sender: "Riti" },
+                    { text: "thank you", sender: "You" },
+                    { text: "im so stressed out from my chem class its insane!", sender: "You" },
+                    { text: "like my teacher is just costantly getting on my nerves and making me fill out the craziest of lab reports", sender: "You" },
+                    { text: "dont even get me started on stats", sender: "You" },
+                    { text: "thats a whole other thing", sender: "You" },
+                    { text: "omg", sender: "Riti" },
+                    { text: "and i dont feel sick as much as i feel unwell yk", sender: "You" },
+                    { text: "pls take care tho and yeah i get it", sender: "Riti" },
+                    { text: "i was contemplating earlier just going home but i dont think that would be smart", sender: "You" },
+                    { text: "my parents would be PISSED abt me missing class like that", sender: "You" },
+                    { text: "yeah i get that", sender: "Riti" },
+                    { text: "still, make sure to take care of yourself", sender: "Riti" },
+                    { text: "ill talk to you more abt it tmrrw", sender: "You" },
+                    { text: "im gonna try to get some sleep", sender: "You" },
+                    { text: "good idea", sender: "Riti" },
+                    { text: "good night", sender: "You" },
+                    { text: "gn gn", sender: "Riti" },
+                    { text: "feel better", sender: "Riti" },
+                  
+                ]
+            },
+            "Conner": {
+                time: "Friday, Sep 13 • 4:26 PM",
+                messages: [
+                     { text: "HAPPY BIRTHDAY!!!", sender: "You" },
+                    { text: "THANK YOU!!", sender: "Conner" },
+                    { text: "hows your day going?", sender: "You" },
+                    { text: "todays been pretty chill", sender: "Conner" },
+                    { text: "just slept in and spent time w my friends", sender: "Conner" },
+                    { text: "thats nice", sender: "You" },
+                    { text: "classesve started for you too right?", sender: "You" },
+                    { text: "yeah", sender: "Conner" },
+                    { text: "hows that going?", sender: "You" },
+                    { text: "schools been great", sender: "Conner" },
+                    { text: "hbu? hows new york?", sender: "Conner" },
+                    { text: "its been pretty fun", sender: "You" },
+                    { text: "some awesome people some rude people but its okay", sender: "You" },
+                    { text: "i have to take the subway a bunch which is always intresting", sender: "You" },
+                    { text: "thats fun", sender: "Conner" },
+                    { text: "yeah", sender: "You" },
+                    { text: "anything interesting happening for you?", sender: "You" },
+                    { text: "im doing marching band now so that intresting", sender: "Conner" },
+                    { text: "its a lot of fun though", sender: "Conner" },
+                    { text: "and the band members host a lot of house parties which is great", sender: "Conner" },
+                    { text: "oh thats so cool", sender: "You" },
+                    { text: "i forgot that some schools do marching band still", sender: "You" },
+                    { text: "yeah, most of the big ten schools do", sender: "Conner" },
+                    { text: "neat", sender: "You" },
+                    { text: "that must be nice, having something youre used to but not at the same time", sender: "You" },
+                    { text: "it is", sender: "Conner" },
+                    { text: "well, have a nice bday", sender: "You" },
+                    { text: "it was great talking to you", sender: "You" },
+                    { text: "you too!", sender: "Conner" },
+                ]
+            },
+            "Jason": {
+                time: "Sunday, Sep 1 • 3:09 PM",
+                messages: [
+                    { text: "heyyy, sorry i've been in atlanta for the past few days", sender: "Jason" },
+                    { text: "unfortunatey, i have a meeting tomorrow evening but i could do dinner on tuesday!", sender: "Jason" },
+                    { text: "i get off work at 5 and you could meet me at wsp if you're free?", sender: "Jason" },
+                    { text: "i have class at 5...", sender: "You" },
+                    { text: "pain and suffering", sender: "Jason" },
+                    { text: "i hope Atlanta was fun", sender: "You" },
+                    { text: "we will do dinner this week tho", sender: "Jason" },
+                    { text: "i just shared my schedule w you", sender: "You" },
+                    { text: "what does your schedule look like thursdays", sender: "Jason" },
+                    { text: "perfect", sender: "Jason" },
+                    { text: "the grey is free time", sender: "You" },
+                    { text: "the purple is when i work", sender: "You" },
+                    { text: "the only thing not pictured is this friday im busy 2 to 4", sender: "You" },
+                    { text: "share your schedule?", sender: "You" },
+                    { text: "sent", sender: "Jason" },
+                    { text: "lunch after your class on friday?", sender: "Jason" },
+                    { text: "we dont have to do dinner tmrrw, we could just meet up at some point before your meeting", sender: "You" },
+                    { text: "id be down", sender: "You" },
+                    { text: "it looks like we switch out for shifts at tisch dances equipment room?!", sender: "You" },
+                    { text: "thats actually crazy", sender: "You" },
+                    { text: "so well get to see each other at least twice a week", sender: "You" },
+                    { text: "great!", sender: "Jason" },
+                    { text: "ill see you then", sender: "Jason" },
+                    { text: "see you", sender: "You" },
+                ]
+            },
+            "Alexis": {
+                time: "Thursday, Aug 29 • 4:26 PM",
+                messages: [
+                    { text: " We gyatt to hang out before u leave", sender: "Alexis" },
+                    { text: "r u free this weekend 🙏😝", sender: "Alexis" },
+                    { text: "im leaving Saturday 😭", sender: "You" },
+                    { text: "NOOOOOOOOI", sender: "Alexis" },
+                    { text: "Grr did u wanna hangout tonight then maybe? ik its last minute but i wanna see u :(", sender: "Alexis" },
+                    { text: "or we can do a dinner or smthg tmrw", sender: "Alexis" },
+                    { text: "i cant 😭", sender: "You" },
+                    { text: "NOOOOOOOOOO", sender: "Alexis" },
+                    { text: "my parents are having us go out to eat tonight and i have a doctors appointment tomorrow", sender: "You" },
+                    { text: "what about lunch😢", sender: "Alexis" },
+                    { text: "or even breakfast", sender: "Alexis" },
+                    { text: "ive been waking up early", sender: "Alexis" },
+                    { text: "my appointment is at 11", sender: "You" },
+                    { text: "GRRRRR💔💔💔💔", sender: "Alexis" },
+                    { text: "srry i didnt wanna ask to hangout while i was sick", sender: "Alexis" },
+                    { text: "its okay i get it", sender: "You" },
+                    { text: "this sucks so bad", sender: "Alexis" },
+                    { text: "my heart is brocken", sender: "Alexis" },
+                    { text: "im gonna miss u :(", sender: "Alexis" },
+                    { text: "why u gotta leave so early", sender: "Alexis" },
+                    { text: "i have stuff i need to do", sender: "You" },
+                    { text: "im going to miss you to", sender: "You" },
+                    { text: "i understand :(", sender: "Alexis" },
+                    { text: "im glad i got to see u at all", sender: "Alexis" },
+                    { text: "sorry it couldnt be more", sender: "Alexis" },
+                    { text: "same", sender: "You" },
+                    { text: "🤎🩷💓🩷💗💗🧡💞💘🧡🩷❣️🩷❣️❣️💕🩷💔💓❤️💘💞🧡💞🧡💞🧡❤️❤️💔💔❤️💔🩷❤️🧡❤️❣️💞🩷💕", sender: "Alexis" },
+                    { text: "ill be home for thanksgiving and then back in december for break", sender: "You" },
+                    { text: "pkay thats good at least", sender: "Alexis" },
+                    { text: "hmu when u get home so we can do smthg", sender: "Alexis" },
+                    { text: "ofc", sender: "You" },
+                    { text: "you can always just call me yk", sender: "You" },
+                    { text: "im never awake at normal hours", sender: "Alexis" },
+                    { text: "i dont know my finals schedule yet but my last day of class is the 12th of december", sender: "You" },
+                    { text: "my last day is prolly after yours", sender: "Alexis" },
+                    { text: "ill have to check", sender: "Alexis" },
+                    { text: "if i have finals ill probably be back around the 14th", sender: "You" },
+                    { text: "okay nice", sender: "Alexis" },
+                    { text: "ill share my weekly schedule w you", sender: "You" },
+                    { text: "ok got it", sender: "Alexis" },
+                    { text: "jeezuz", sender: "Alexis" },
+                    { text: "the grey is free time", sender: "You" },
+                    { text: "ohhh", sender: "Alexis" },
+                    { text: "yeah", sender: "You" },
+                    { text: "i like scheduling my free time which is why its grey but i only feel the need to schedule it when its gonna be more than like 2 hrs for some reason", sender: "You" },
+                    { text: "that's silly", sender: "Alexis" },
+                    { text: "why is it silly?", sender: "You" },
+                    { text: "like silly /pos", sender: "Alexis" },
+                    { text: "ah", sender: "You" },
+                    { text: "how?", sender: "You" },
+                    { text: "im confused", sender: "You" },
+                    { text: "idk how to explin silly how i understand it", sender: "Alexis" },
+                    { text: "like a cat farting is silly in the way it is strange but amusing", sender: "Alexis" },
+                    { text: "idk", sender: "Alexis" },
+                    { text: "AH", sender: "You" },
+                    { text: "i get it now", sender: "You" },
+                    { text: "its strange and unusual but kinda endearing", sender: "You" },
+                    { text: "yes", sender: "Alexis" },
+                    { text: "silly <3", sender: "Alexis" },
+                    { text: "lol", sender: "You" },
+                  
+                ]
+            }
+        };
+
+        function loadMessages(name) {
+            const chatMessages = document.getElementById("chatMessages");
+            const contactName = document.getElementById("contactName");
+            contactName.textContent = name;
+
+            chatMessages.innerHTML = `<div class="date-time">${conversations[name].time}</div>`;
+
+            conversations[name].messages.forEach(msg => {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message", msg.sender === "You" ? "sent" : "received");
+                messageElement.innerText = msg.text;
+                chatMessages.appendChild(messageElement);
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function enableMessaging() {
+            const inputField = document.querySelector(".message-input input");
+            const sendButton = document.querySelector(".message-input button");
+
+            inputField.removeAttribute("disabled");
+            sendButton.removeAttribute("disabled");
+
+            sendButton.addEventListener("click", () => {
+                const messageText = inputField.value.trim();
+                if (messageText !== "") {
+                    const chatMessages = document.getElementById("chatMessages");
+
+                    // Create message bubble
+                    const failedMessage = document.createElement("div");
+                    failedMessage.classList.add("message", "sent");
+                    failedMessage.style.background = "#ffcccc"; // Light red background
+                    failedMessage.style.color = "#b30000"; // Dark red text
+                    failedMessage.innerText = messageText;
+
+                    // Create "Could not send" error text
+                    const errorText = document.createElement("div");
+                    errorText.style.fontSize = "12px";
+                    errorText.style.color = "#b30000"; // Dark red text
+                    errorText.style.marginTop = "2px";
+                    errorText.innerText = "Could not send";
+
+                    // Wrap message and error text together
+                    const messageWrapper = document.createElement("div");
+                    messageWrapper.style.display = "flex";
+                    messageWrapper.style.flexDirection = "column";
+                    messageWrapper.style.alignItems = "flex-end";
+                    messageWrapper.appendChild(failedMessage);
+                    messageWrapper.appendChild(errorText);
+
+                    chatMessages.appendChild(messageWrapper);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    inputField.value = ""; // Clear input field
+                }
+            });
+        }
+
+        window.onload = () => {
+            loadMessages("Dad");
+            enableMessaging();
+        };
+    </script>
+
+</body>
+</html>

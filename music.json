@@ -1,0 +1,32 @@
+{
+  "Playlists": {
+    "Playlist 1": [
+      { "name": "Lady Grinning Soul - David Bowie", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Lady%20Grinning%20Soul%20(2013%20Remaster).mp3?v=1740688258694"},
+      { "name": "Femme Fatale - The Velvet Underground & Nico", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Femme%20Fatale.mp3?v=1740688455005"},
+      { "name": "The Great Gig In The Sky (2011 Remastered) - Pink Floyd", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Pink%20Floyd%20-%20The%20Great%20Gig%20In%20The%20Sky%20(2011%20Remastered).mp3?v=1740688501460"},
+      { "name": "Lover, You Should've Come Over - Jeff Buckley", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Lover%2C%20You%20Should've%20Come%20Over.mp3?v=1740688729852"},
+      { "name": "Fat Old Sun - Pink Floyd", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Pink%20Floyd%20-%20Fat%20Old%20Sun%20(Official%20Audio).mp3?v=1740689063703"},
+      { "name": "Light My Love - Greta Van Fleet", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Greta%20Van%20Fleet%20-%20Light%20My%20Love%20(Audio).mp3?v=1740689066097"},
+      { "name": "Melancholy Man - The Moody Blues", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Melancholy%20Man.mp3?v=1740689951379"},
+      { "name": "I Know The End - Phoebe Bridgers", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Phoebe%20Bridgers%20-%20I%20Know%20the%20End%20(Official%20Video).mp3?v=1740690045438"},
+      { "name": "Vienna - Billy Joel", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Vienna.mp3?v=1740690123385"},
+      { "name": "Junk - Paul McCartney", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Junk%20(2011%20Remaster).mp3?v=1740690202216"}
+    ],
+    "Playlist 2": [
+      { "name": "Back on 74 - Jungle", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Back%20On%2074.mp3?v=1740690454920"},
+      { "name": "Alright - Supergrass", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Alright.mp3?v=1740690586391"},
+      { "name": "Virtual Insanity - Jamiroquai", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Virtual%20Insanity.mp3?v=1740690716131"},
+      { "name": "Lost - Frank Ocean", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Lost.mp3?v=1740690856141"},
+      { "name": "Superstition - Stevie Wonder", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Superstition.mp3?v=1740690928113"},
+      { "name": "Burning Down the House (2005 Remaster) - Talking Heads", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Burning%20Down%20the%20House%20(2005%20Remaster).mp3?v=1740691016712"},
+      { "name": "Francis Forever - Mitski", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Francis%20Forever.mp3?v=1740691095578"},
+      { "name": "Feels Like We Only Go Backwards - Tame Impala", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Feels%20Like%20We%20Only%20Go%20Backwards.mp3?v=1740691149640"},
+      { "name": "Remember When - Wallows", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Remember%20When.mp3?v=1740691280049"},
+      { "name": "Girls - Sing Street", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Girls.mp3?v=1740691455556"},
+      { "name": "Pink Lemonade - The Wombats", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Pink_Lemonade.mp3?v=1740691534926"},
+      { "name": "Afterglow - The Driver Era", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Afterglow.mp3?v=1740691592768"},
+      { "name": "Cigarette Daydreams - Cage The Elephant", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Cigarette_Daydreams.mp3?v=1740691684334"},
+      { "name": "Kilby Girl - The Backseat Lovers", "file": "https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/Kilby_Girl.mp3?v=1740691793421"}
+    ]
+  }
+}

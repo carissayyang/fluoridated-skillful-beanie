@@ -1,0 +1,997 @@
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+body {
+  line-height: 1;
+}
+
+body::before {
+  content: "";
+  position: fixed; /* Ensures the background remains static */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/bg%20birds.png?v=1740073945231");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  z-index: -1; /* Ensures it stays in the background */
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.3em;
+  margin-bottom: 10px;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+input,
+select {
+  vertical-align: middle;
+}
+
+#desktop {
+  font-family: Arial, Helvetica, sans-serif;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.window {
+  will-change: transform, width, height;
+  position: absolute;
+  border: 2px solid #000;
+  background: #eee;
+  border-radius: 5px;
+  z-index: 1000;
+  overflow: visible;
+  display: hidden;
+  flex-direction: column;
+  height:  auto;
+  resize: both;
+}
+
+
+.window > div {
+  overflow-y: auto;
+  min-height: 0; /* Allows it to shrink when resized */
+}
+
+.window.closed {
+  display: none;
+}
+
+.window.minimizedWindow {
+  display: none;
+}
+
+.window.fullSizeWindow {
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  border-radius: 0;
+  bottom: 32px !important;
+}
+
+.fullSizeWindow .ui-resizable-handle {
+  display: none;
+}
+
+.windowHeader {
+  background-color: #b7b7e0;
+  text-align: right;
+  border-bottom: 2px solid #000000;
+  padding: 2px;
+  cursor: move;
+  height: 28px;
+}
+
+.activeWindow .windowHeader {
+  background-color: #8888d6;
+}
+
+.windowHeader > span {
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid #000000;
+  margin-left: 4px;
+  font-size: 19px;
+  padding: 2px 10px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  border-radius: 5px;
+  line-height: 20px;
+  width: 12px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.windowHeader > span:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.windowHeader > span.winclose:hover {
+  background: #f15454;
+}
+
+.windowHeader > span.winminimize:hover {
+  background: #f5b247;
+}
+
+.windowHeader > span.winmaximize:hover {
+  background: #44eb1a;
+}
+
+.windowHeader > span > span {
+  display: inline-block;
+  height: 8px;
+  width: 10px;
+  position: absolute;
+  top: 6px;
+  left: 10px;
+}
+
+.winminimize > span {
+  border-bottom: 3px solid #000;
+}
+
+.winmaximize > span {
+  border: 2px solid #000;
+  border-top: 3px solid #000;
+}
+
+.winmaximize > span:nth-child(2) {
+  display: none;
+}
+
+.fullSizeWindow .winmaximize > span:nth-child(1) {
+  margin: 2px 0 0 -4px;
+}
+
+.fullSizeWindow .winmaximize > span:nth-child(2) {
+  display: inline-block;
+  top: 3px;
+  left: 12px;
+}
+
+.wincontent {
+  padding: 10px;
+  min-width: 200px;
+  min-height: 140px;
+  border: 2px solid #000;
+  margin: 2px;
+  border-radius: 0 0 5px 5px;
+}
+
+.windowHeader > strong {
+  float: left;
+  margin: 0px 3px 0 10px;
+  line-height: 29px;
+  font-size: 17px;
+}
+
+.taskbarPanel {
+  display: inline-block;
+  border: 2px solid #000;
+  border-radius: 5px;
+  line-height: 24px;
+  margin: 2px 0 0 10px;
+  font-size: 17px;
+  padding: 0 10px;
+  background: #ccc;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.taskbarPanel.activeTab {
+  background: #fff;
+}
+
+.taskbarPanel.minimizedTab {
+  background: #aaa;
+}
+
+.taskbarPanel.minimizedTab:hover {
+  background: #ddd;
+}
+
+.taskbarPanel.closed {
+  display: none;
+}
+
+#taskbar {
+  position: absolute;
+  height: 32px;
+  border-top: 2px solid #000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+}
+
+#icons {
+  position: absolute;
+  z-index: 10;
+  top: 20px;
+  left: 20px;
+}
+
+#icons a {
+  display: block;
+  cursor: pointer;
+  padding: 2px 10px;
+}
+
+#icons a:hover {
+  background: #000;
+  color: #fff;
+}
+
+#templateLink {
+  position: absolute;
+  display: inline-block;
+  bottom: 10px;
+  right: 20px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #30478c;
+}
+
+/*Demo styles BEGIN*/
+#window0 {
+  top: 20px;
+  left: 240px;
+}
+#window1 {
+  top: 400px;
+  left: 120px;
+}
+#window2 {
+  top: 250px;
+  left: 300px;
+}
+#window3 {
+  top: 125px;
+  left: 420px;
+}
+#window4 {
+  top: 200px;
+  left: 350px;
+}
+#window5 {
+  top: 300px;
+  left: 150px;
+}
+#window6 {
+  top: 400px;
+  left: 250px;
+}
+#window7 {
+  top: 500px;
+  left: 330px;
+}
+#window0 .wincontent {
+  width: 660px;
+  height: 400px;
+}
+#window1 .wincontent {
+  width: 500px;
+  height: 300px;
+}
+#window2 .wincontent {
+  width: 400px;
+  height: 350px;
+}
+#window3 .wincontent {
+  width: 400px;
+  height: 350px;
+}
+#window4 .wincontent {
+  width: 400px;
+  height: 600px;
+}
+#window5 .wincontent {
+  width: 400px;
+  height: 350px;
+}
+#window6 .wincontent {
+  width: 400px;
+  height: 350px;
+}
+#window7 .wincontent {
+  width: 400px;
+  height: 350px;
+}
+@media screen and (max-width: 960px) {
+  #window0 {
+    left: 10px;
+  }
+  #window3 {
+    left: 50px;
+  }
+}
+@media screen and (max-width: 770px) {
+  #window0 .wincontent {
+    width: 460px;
+  }
+  #window2 {
+    left: 100px;
+  }
+  #window1 {
+    top: 190px;
+    left: -5px;
+  }
+}
+@media screen and (max-width: 540px) {
+  #window0 .wincontent {
+    width: 230px;
+    height: 200px;
+  }
+  #window3 .wincontent {
+    width: 275px;
+    height: auto;
+  }
+  #window3 {
+    top: 9px;
+    left: 10px;
+  }
+  #window2 {
+    left: -118px;
+  }
+  #window1 .wincontent {
+    width: auto;
+    height: 300px;
+  }
+}
+
+/* GALLERY WINDOW CSS BEGINS HERE */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid */
+  gap: 10px;
+  height: 100%;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 10px;
+}
+
+#gallery img {
+  width: 100px; /* Adjust for square images */
+  height: 100px;
+  object-fit: cover; /* Ensures images stay square */
+  border-radius: 2px;
+}
+
+.gallery-thumbnail {
+  transition: transform 0.2s ease-in-out;
+}
+
+.gallery-thumbnail:hover {
+  transform: scale(1.1); /* Slightly enlarges on hover */
+}
+
+
+.gallery-image {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#viewer-image {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+
+.gallery-image:hover {
+    transform: scale(1.05);
+}
+
+/* Buffering Spinner */
+#image-loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: hidden; /* Start hidden */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+#image-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#image-viewer img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+}
+
+#close-viewer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    background: none; /* Remove background */
+    border: none;
+}
+
+/* NOTES WINDOW CSS BEGINS HERE */
+#notes-list {
+  width: 30%;
+  max-height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid black;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.note-item {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.note-item:hover {
+  background-color: #f0f0f0; /* Light hover effect */
+}
+
+.active-note {
+  background-color: #d0e6ff; /* Light blue highlight */
+  font-weight: bold;
+  border-left: 4px solid #007bff; /* Optional left border for emphasis */
+}
+
+#note-content {
+  width: 70%;
+  padding: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+#notes-container {
+  display: flex;
+  height: 100%; /* Make sure it takes up the full height */
+  align-items: stretch;
+}
+
+/* GAMES WINDOW CSS BEGINS HERE */
+/* Container for the game list and content */
+#games-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Style for the game list */
+#games-list-container {
+  width: 30%;  /* Takes up 30% of the container */
+  border-right: 2px solid #cccccc;
+  padding-right: 20px;
+  max-height: 500px; /* Set a max height for the list */
+  overflow-y: auto;  /* Enables vertical scrolling */
+  padding-bottom: 20px; /* Add some space at the bottom */
+}
+
+#games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+  overflow: auto;
+}
+
+.game-item {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.game-item:hover {
+  background-color: #e1e1e1;
+}
+
+.active-game {
+  background-color: #d1e7ff;
+  border: 1px solid #007bff;
+}
+
+/* Style for the selected game content */
+#games-content-container {
+  width: 65%;  /* Takes up 65% of the container */
+  padding-left: 20px;
+}
+
+#games-content {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+#games-content img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.material-symbols-outlined {
+  color: white; /* Change to any color */
+}
+
+/* SEARCH WINDOW CSS BEGINS HERE */
+#search-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#search-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0; /* Prevents flex issues with overflow */
+}
+
+.search-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  color: black;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+}
+
+/* MESSAGES WINDOW CSS BEGINS HERE */
+#messages-container {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+}
+
+#messagesFrame {
+  display: flex;
+  flex-grow: 1;
+  border: none;
+}
+
+#messagesFrame iframe {
+  flex-grow: 1; 
+  width: 100%;
+  height: 100%;
+  border: none; /* Remove default iframe border */
+}
+
+/* SECRET WINDOW CSS BEGINS HERE */
+#secret-container {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+}
+
+#secretFrame {
+  display: flex;
+  flex-grow: 1;
+  border: none;
+}
+
+#secretFrame iframe {
+  flex-grow: 1; 
+  width: 100%;
+  height: 100%;
+  border: none; /* Remove default iframe border */
+}
+
+/* MUSIC WINDOW CSS BEGINS HERE */
+#music-container {
+  padding: 10px;
+}
+
+#playlist-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.playlist-tab {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.playlist-tab:hover {
+  background-color: #0056b3;
+}
+
+#music-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#audio-player {
+  width: 100%;
+  margin: 10px 0;
+}
+
+#track-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.track-item {
+  background: #f0f0f0;
+  padding: 5px;
+  width: 90%;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.track-item:hover {
+  background: #d9d9d9;
+}
+
+
+
+/* LOGIN SCREEN CSS BEGINS HERE */
+/* Hide elements initially */
+.hidden {
+  display: none;
+}
+
+/* Login Screen */
+#login-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/bg%20blue%20city.png?v=1740348633141') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 0.5s ease-in-out; /* Smooth scrolling effect */
+}
+
+/* Move login screen up when "hidden" class is added */
+#login-screen.hidden {
+  transform: translateY(-100%);
+}
+
+/* Add a semi-transparent overlay to enhance blur */
+#login-screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px); /* Adjust blur intensity */
+  -webkit-backdrop-filter: blur(5px); /* Safari support */
+  background: rgba(0, 0, 0, 0.2); /* Optional: darken */
+}
+
+#login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center everything horizontally */
+  justify-content: center;
+  position: relative;
+  z-index: 1; /* Keep it above the blur */
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  width: 300px;
+}
+
+#user-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+#username,
+#password {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0;
+  text-align: center;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+
+/* Password container styling */
+#password-container {
+  display: inline-block;
+  position: relative;
+}
+
+/* Styling the password input */
+#password {
+  font-family: monospace;
+  outline: none;
+}
+
+/* Adding the blinking cursor */
+#password::after {
+  content: "|";  /* Cursor character */
+  display: inline-block;
+  animation: blink 0.9s infinite;
+  color: white; /* Match text color */
+}
+
+/* Blinking effect */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* file explorer section */
+.file-item {
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-item:hover {
+    background: #e0e0e0;
+}
+
+.back-button {
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+
+.error-window {
+    width: 300px;
+    height: 150px;
+    background: white;
+    border: 2px solid #cc0000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    padding: 10px;
+}
+
+.error-window .windowHeader {
+    background: #cc0000;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.error-window .wincontent {
+    padding: 10px;
+}
+
+.error-window .winclose {
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+.error-window .winclose:hover {
+    color: yellow;
+}

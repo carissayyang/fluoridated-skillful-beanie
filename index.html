@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link rel="canonical" href="https://html5-templates.com/" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=block"
+    />
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Desktop</title>
+  </head>
+  <body>
+    <!-- Startup/Login Screen -->
+    <div id="login-screen">
+      <div id="login-container">
+        <br />
+        <img
+          src="https://cdn.glitch.global/1582b70f-37fb-4f86-a46f-7dd89fdb393a/20230120_202115.jpg?v=1740348447945"
+          id="user-icon"
+          alt="User Icon"
+        />
+        <input type="text" id="username" value="catscatscats" disabled />
+        <div id="password-container">
+          <span id="password">*************</span>
+        </div>
+        <br />
+        <br />
+        <p style="font-family: sans-serif; font-size: 16px">Press Enter Key</p>
+      </div>
+    </div>
+
+    <div id="desktop" class="hidden">
+      <div class="window closed" data-title="Gallery">
+        <div id="gallery"></div>
+      </div>
+      <div id="image-viewer">
+        <div id="image-loader"></div>
+        <!-- This is the buffering spinner -->
+        <img id="viewer-image" alt="Full Size Image" />
+        <button id="close-viewer">&times;</button>
+      </div>
+
+      <div class="window closed" data-title="Notes">
+        <div id="notes-container">
+          <div id="notes-list"></div>
+          <div id="note-content"></div>
+        </div>
+      </div>
+      <div class="window closed" data-title="Games Wishlist">
+        <div id="games-container">
+          <div id="games-list-container">
+            <div id="games-list"></div>
+          </div>
+          <div id="games-content-container">
+            <div id="games-content"></div>
+          </div>
+        </div>
+      </div>
+      <div class="window closed" data-title="Search History">
+        <div id="search-container">
+          <div id="search-list"></div>
+        </div>
+      </div>
+      <div class="window closed" data-title="Messages">
+        <div id="messages-container">
+          <iframe
+            id="messagesFrame"
+            src="messages.html"
+            frameborder="0"
+          ></iframe>
+        </div>
+      </div>
+      <div class="window closed" data-title="Music">
+    <div id="music-container">
+        <div id="playlist-tabs"></div> <!-- Playlist Tabs -->
+        <div id="track-list"></div> <!-- Tracks -->
+        <p id="now-playing">Now Playing: None</p>
+        <audio id="audio-player" controls></audio>
+    </div>
+</div>
+
+
+      <div class="window closed" data-title="Secret">
+        <div id="secret-container">
+          <iframe id="secretFrame" src="password.html" frameborder="0"></iframe>
+        </div>
+      </div>
+
+  <div class="window closed" data-title="File Explorer">
+    <div id="file-explorer">
+        <div class="file-explorer-content">
+            <button class="back-button hidden">← Back</button>
+            <div id="file-list"></div>
+        </div>
+    </div>
+</div>
+
+
+      <div id="taskbar"></div>
+
+      <!-- icons on desktop that link the things to open-->
+      <div id="icons">
+        <a class="openWindow" data-id="0">
+          <span class="material-symbols-outlined" style="font-size: 60px">
+            photo_library
+          </span>
+        </a>
+        <a class="openWindow" data-id="1"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            notes
+          </span></a
+        >
+        <a class="openWindow" data-id="2"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            sports_esports
+          </span></a
+        >
+        <a class="openWindow" data-id="3"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            search
+          </span></a
+        >
+        <a class="openWindow" data-id="4"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            message
+          </span></a
+        >
+        <a class="openWindow" data-id="5"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            music_note
+          </span></a
+        >
+        <a class="openWindow" data-id="6"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            lock
+          </span></a
+        >
+        <a class="openWindow" data-id="7"
+          ><span class="material-symbols-outlined" style="font-size: 60px">
+            folder
+          </span></a
+        >
+      </div>
+      <!-- add no wifi icon here -->
+      <span
+        class="material-symbols-outlined"
+        style="
+          font-size: 24px;
+          position: absolute;
+          right: 10px;
+          bottom: 5px;
+          color: black; /* Adjust to match your taskbar */
+          opacity: 0.8; /* Slight transparency */
+        "
+      >
+        wifi_off
+      </span>
+    </div>
+    <script>
+      async function loadGallery() {
+        try {
+          const response = await fetch("images.json");
+          const images = await response.json();
+
+          const gallery = document.getElementById("gallery");
+          gallery.innerHTML = ""; // Clear existing images
+
+          images.forEach((image) => {
+            const imgElement = document.createElement("img");
+            // Load smaller thumbnails first
+            imgElement.src = image.url.replace(
+              "/upload/",
+              "/upload/w_300,h_300,c_fill,q_auto:low,f_auto/"
+            );
+            imgElement.alt = "Gallery Image";
+            imgElement.classList.add("gallery-thumbnail");
+
+            imgElement.addEventListener("click", () => {
+              openViewer(image.url); // Load full image only on click
+            });
+
+            gallery.appendChild(imgElement);
+          });
+        } catch (error) {
+          console.error("Error loading images:", error);
+        }
+      }
+
+      function openViewer(fullImageUrl) {
+        const viewer = document.getElementById("image-viewer");
+        const viewerImage = document.getElementById("viewer-image");
+
+        viewer.style.visibility = "visible";
+        viewer.style.opacity = "1";
+
+        // Load full image when viewer opens
+        viewerImage.src = fullImageUrl.replace(
+          "/upload/",
+          "/upload/fl_progressive,fl_lossy,q_auto:low,f_auto/"
+        );
+      }
+
+      loadGallery();
+    </script>
+  </body>
+</html>
